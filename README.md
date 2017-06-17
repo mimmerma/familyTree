@@ -1,0 +1,2 @@
+# familyTree
+Family Tree Creator - Create a class called Person which will have a name, when they were born and when (and if) they died. Allow the user to create these Person classes and put them into a family tree structure. Print out the tree to the screen.  This means you'll need to define a way to relate the people to eachother via some mechanism within the classes.  Do not define an external data structure to link the people to eachothere (i.e. don't have an array of people that doesn't live within a Person object).
