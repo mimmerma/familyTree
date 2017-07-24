@@ -1,9 +1,11 @@
 #
 #
 #
+import getHelp as getHelp
+
 def validateInput(userInput):
 	# displayTree action takes no arguments
-	# Ex: displayTree
+	# Ex: familyTree.py -a displayTree
 
 	# unpack userInput
 	action, namePerson, birthDate, nameFirstParent, nameSecondParent, nameDeceased, deathDate = userInput
@@ -16,7 +18,7 @@ def validateInput(userInput):
 	raise Exception('NotImplementedError')
 
 def getHelp():
-	print('familyTree.py -a displayTree')
+	getHelp.getHelp_displayTree()
 
 #def execute():
 
