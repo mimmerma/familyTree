@@ -7,6 +7,12 @@
 #import rlcompleter
 import sys, getopt
 import validateUserInput as validateUserInput
+import getHelp as getHelp
+
+# first and last names should be comma delimited, e.g. 'Jason,Immerman'
+# empty spaces will be interpreted by the command line as the end of a parameter, unless the parameter is wrapped in double quotes
+# e.g. 'David Bowie' will be interpreted as ('David', 'Bowie) and
+# '"David Bowie"' will be interpreted as ('David Bowie')
 
 def main(argv):
 	'''main familyTree.py script'''
@@ -22,18 +28,17 @@ def main(argv):
 		# argv is argument list (argv[0] is script name)
 		# short options are in a string followed by ':' if they require an argument (stored in '-<shortOption>')
 		# long options are in a list of strings followed by equal (stored in '--<longOption>')
-		# first and last names should be comma delimited, e.g. 'Jason,Immerman'
-		# empty spaces will be interpreted by the command line as the end of a parameter
-		# should delete remove spaces from validations
 		opts, args = getopt.getopt(argv, 'ha:n:b:f:s:d:e:', ['action=','namePerson=', 'birthDate=', 'nameFirstParent=', 'nameSecondParent=', 'nameDeceased=', 'deathDate='])
 	except getopt.GetoptError:
-		print('familyTree.py -a <action> -n <namePerson> -b <birthDate> -f <nameFirstParent> -s <nameSecondParent> -d <nameDeceased> -e <deathDate>')
+		getHelp.getHelp_allActions()
 		# Unix programs generally use 2 for command line syntax errors and 1 for all other kind of errors
 		sys.exit(2)
 	for opt, arg in opts:
+		# strip whitespace from option
+		opt = opt.strip()
 		# optional help option
 		if opt == '-h':
-			print('familyTree.py -a <action> -n <namePerson> -b <birthDate> -f <nameFirstParent> -s <nameSecondParent> -d <nameDeceased> -e <deathDate>')
+			getHelp.getHelp_allActions()
 		# action option required for all program calls
 		# possible actions: addPerson, deathNotice, displayTree
 		elif opt in ('-a', '--action'):
@@ -54,9 +59,9 @@ def main(argv):
 			deathDate = arg
 	
 	# test output
-	print('unprocessed input: ')
-	print('action is:', action, 'namePerson is:', namePerson, 'birthDate is:', birthDate, 'nameFirstParent is:', nameFirstParent,
-			'nameSecondParent is:', nameSecondParent, 'nameDeceased is:', nameDeceased, 'deathDate is:', deathDate)
+	#print('unprocessed input: ')
+	#print('action is:', action, 'namePerson is:', namePerson, 'birthDate is:', birthDate, 'nameFirstParent is:', nameFirstParent,
+	#		'nameSecondParent is:', nameSecondParent, 'nameDeceased is:', nameDeceased, 'deathDate is:', deathDate)
 
 	userInput = (action, namePerson, birthDate, nameFirstParent, nameSecondParent, nameDeceased, deathDate)
 	return userInput
@@ -68,31 +73,6 @@ if __name__ == '__main__':
 
 # validate user input for any of the actions
 validateUserInput.testInputFormat(userInput)
-
-
-
-#def printIntro():
-	# put in 'help' section?
-#	print
-#	print('Welcome to Family Tree!')
-#	print('Please enter info to begin or continue building your tree, or to display it')
-#	print('Entries should be in the form [method], [<optional-arguments comma delimited>]')
-#	print('Possible methods are: "addPerson", "deathNotice", "displayTree"')
-#	print
-#	print('addPerson method: <name-of-person>, <birth-date>, <name-of-first-parent>, [<optional-name-of-second-parent>]')
-#	print('Ex: addPerson, Jason Immerman, 05/22/1988, Irene Immerman, Michael Immerman')
-#	print
-#	print('deathNotice method: <name-of-deceased>, [<optional-date-of-death>]')
-#	print('Ex: deathNotice, David Bowie, 01/10/2016')
-#	print('Note about deathNotice: must be called with name of existing Person object')
-#	print('Note about deathNotice: date-of-death is optional because might be unknown')
-#
-#	print
-#	print('displayTree method takes no arguments')
-#	print('Ex: displayTree')
-#	print('\n')
-
-#printIntro()
 #
 #
 #

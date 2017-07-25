@@ -2,6 +2,7 @@
 #
 #
 import re
+import getHelp as getHelp
 
 def validateInput(userInput):
 	# familyTree.py -a deathNotice -d <nameDeceased> -e <deathDate>
@@ -18,18 +19,23 @@ def validateInput(userInput):
 		raise Exception('namePerson, birthDate, nameFirstParent, nameSecondParent are not allowable arguments for the deathNotice action')
 
 	# remove leading and trailing whitespace
-	nameDeceased.strip()
+	nameDeceased = nameDeceased.strip()
 	if deathDate is not None:
-		deathDate.strip()
+		deathDate = deathDate.strip()
 
 	if nameDeceased == '' or deathDate == '':
 		raise Exception('nameDeceased and deathDate are required for the deathNotice action')
 
-	#try:
-	#	deathDate.strip()
-	#except AttributeError:
-	#	pass
+	validateNameDeceased(nameDeceased)
 
+	if deathDate is not None:
+		validateDeathDate(deathDate)
+
+	#return args for addPerson action with whitespace stripped, first and last names space delimited
+	return nameDeceased, deathDate
+
+def validateNameDeceased(nameDeceased):
+	# replace comma with space in name if comma delimited, otherwise do nothing
 	nameDeceased = re.sub(r',', ' ', nameDeceased)
 	nameDeceased_noSpace = re.sub(r'\s+', '', nameDeceased)
 	# pattern object for invalidChars
@@ -38,19 +44,16 @@ def validateInput(userInput):
 	if m_nameDeceased:
 		raise Exception('there are either non-alphanumeric characters, underscore, or digits in nameDeceased')
 
-	if deathDate is not None:
-		deathDate_noSpace = re.sub(r'\s+', '', deathDate)
-		# pattern object for deathDate_format
-		p_deathDate_format = re.compile(r'\d\d/\d\d/\d\d\d\d')
-		m_deathDate_format = p_deathDate_format.match(deathDate_noSpace)
-		if not m_deathDate_format:
-			raise Exception('deathDate is not in the proper format: mm/dd/yyyy')
-
-	#return args for addPerson action with whitespace stripped, first and last names space delimited
-	return nameDeceased, deathDate
+def validateDeathDate(deathDate):
+	deathDate_noSpace = re.sub(r'\s+', '', deathDate)
+	# pattern object for deathDate_format
+	p_deathDate_format = re.compile(r'\d\d/\d\d/\d\d\d\d')
+	m_deathDate_format = p_deathDate_format.match(deathDate_noSpace)
+	if not m_deathDate_format:
+		raise Exception('deathDate is not in the proper format: mm/dd/yyyy')
 
 def getHelp():
-	print('familyTree.py -a deathNotice -d <nameDeceased> -e <deathDate>')
+	getHelp.getHelp_deathNotice()
 
 #def execute():
 

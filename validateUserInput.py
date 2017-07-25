@@ -5,6 +5,7 @@ import re
 import addPerson as addPerson
 import deathNotice as deathNotice
 import displayTree as displayTree
+import getHelp as getHelp
 
 # allow for optional birthDate? Does not currently - add issue ticket to backlog
 
@@ -18,21 +19,8 @@ def testInputFormat(userInput):
 	if userInput == None:
 		raise Exception('user input is None')
 	
-	#if type(userInput) is not str:
-	#	raise Exception('user input is the wrong type, not a string')
-	
-	#if userInput == '':
-	#	raise Exception('user input is empty string')
-
 	if userInput == ():
 		raise Exception('user input is empty tuple')
-
-	# remove leading and trailing spaces
-	# regex alternative
-	#userInput = re.sub(r'\A\s*', '', userInput)
-	#userInput = re.sub(r'\s*\Z', '' , userInput)
-	# use built in strip() method instead of regex for automatic optimizations
-	#userInput.strip()
 
 	# unpack action from userInput
 	action, _, _, _, _, _, _ = userInput
@@ -61,7 +49,7 @@ def testInputFormat(userInput):
 	elif action == displayTree_action:
 		displayTree.validateInput(userInput)
 	else:
-		raise Exception('invalid action')
+		getHelp.getHelp()
 #
 #
 #
