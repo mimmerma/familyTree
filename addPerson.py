@@ -3,6 +3,7 @@
 #
 import re
 import getHelp as getHelp
+import personClass as personClass
 
 def validateInput(userInput):
 	# familyTree.py -a addPerson -n <namePerson> -b <birthDate> -f <nameFirstParent> -s <nameSecondParent>
@@ -76,8 +77,10 @@ def validateNameSecondParent(nameSecondParent):
 def getHelp():
 	getHelp.getHelp_addPerson()
 
-#def execute():
-
+def execute(namePerson, birthDate, nameFirstParent, nameSecondParent, personHash):
+	newPerson = personClass.Person(namePerson, birthDate, nameFirstParent, nameSecondParent)
+	personHash[newPerson.namePerson] = newPerson
+	return personHash
 #
 #
 #

@@ -8,6 +8,7 @@
 import sys, getopt
 import validateUserInput as validateUserInput
 import getHelp as getHelp
+import addPerson as addPerson
 
 # first and last names should be comma delimited, e.g. 'Jason,Immerman'
 # empty spaces will be interpreted by the command line as the end of a parameter, unless the parameter is wrapped in double quotes
@@ -66,13 +67,35 @@ def main(argv):
 	userInput = (action, namePerson, birthDate, nameFirstParent, nameSecondParent, nameDeceased, deathDate)
 	return userInput
 
+def executeCommands(userInput, actions, personHash):
+	action, namePerson, birthDate, nameFirstParent, nameSecondParent, nameDeceased, deathDate = userInput
+	addPerson_action, deathNotice_action, displayTree_action = actions
+
+	if action == addPerson_action:
+		personHash = addPerson.execute(namePerson, birthDate, nameFirstParent, nameSecondParent, personHash)
+
+	return personHash
+
 # need clarification
 if __name__ == '__main__':
 	# sys.argv[1:] captures all the userInputs excluding the script name
 	userInput = main(sys.argv[1:])
 
+personHash = {}
+
+# should all the code below this be within the if __name__ == '__main__' condition?
+# store action name strings in variables (make sure doesn't conflict with module names)
+addPerson_action = 'addPerson'
+deathNotice_action = 'deathNotice'
+displayTree_action = 'displayTree'
+actions = (addPerson_action, deathNotice_action, displayTree_action)
+
 # validate user input for any of the actions
-validateUserInput.testInputFormat(userInput)
+userInput = validateUserInput.testInputFormat(userInput, actions)
+
+# execute the command associated with the action
+personHash = executeCommands(userInput, actions, personHash)
+
 #
 #
 #

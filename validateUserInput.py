@@ -9,7 +9,7 @@ import getHelp as getHelp
 
 # allow for optional birthDate? Does not currently - add issue ticket to backlog
 
-def testInputFormat(userInput):
+def testInputFormat(userInput, actions):
 	"""Validates the format of the user input.
 		Doesn't validate that the action is legal (this will probably occur within the methods themselves).
 		For example, this won't handle if the user calls the deathNotice method on a nonexistent Person."""
@@ -23,15 +23,12 @@ def testInputFormat(userInput):
 		raise Exception('user input is empty tuple')
 
 	# unpack action from userInput
-	action, _, _, _, _, _, _ = userInput
+	action, namePerson, birthDate, nameFirstParent, nameSecondParent, nameDeceased, deathDate = userInput
+	# unpack actions (action name strings stored as variables)
+	addPerson_action, deathNotice_action, displayTree_action = actions
 
 	# remove leading and trailing whitespace from action
 	action.strip()
-
-	# store action name strings in variables (make sure doesn't conflict with module names)
-	addPerson_action = 'addPerson'
-	deathNotice_action = 'deathNotice'
-	displayTree_action = 'displayTree'
 
 	# should I put the validateInput code within the constructor for the AddPerson class or call as an explicit method as below
 	# is there some way to call the validateInput method of the AddPerson class without instantiating it as addPersonCall?
@@ -50,6 +47,10 @@ def testInputFormat(userInput):
 		displayTree.validateInput(userInput)
 	else:
 		getHelp.getHelp()
+
+	userInput = (action, namePerson, birthDate, nameFirstParent, nameSecondParent, nameDeceased, deathDate)
+
+	return userInput
 #
 #
 #
